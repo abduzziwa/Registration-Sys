@@ -3,47 +3,57 @@ const prompt = require("prompt-sync")({ sigint: true });
 console.log(new Date());
 
 function isValidTimeFormat(time) {
-  const regex = /^([01]\d|2[0-3]):?([0-5]\d)$/;
+  const regex = /^([01]\d|2[0-3]):([0-5]\d)$/;
   return regex.test(time);
 }
 
-let name;
+let naam;
 while (true) {
-  name = prompt("Wat is je naam? ");
-  if (name && name.length > 2) {
+  naam = prompt("Wat is je naam? ");
+  if (naam.length > 2) {
     break;
   }
   console.log("Vul een naam in die langer is dan 2 karakters.");
 }
 
 function registerTime() {
-  let starttijd;
+  let starttijd, eindtijd;
+
   while (true) {
-    starttijd = prompt("Hoe laat ben je begonnen ? (HH:MM)");
+    starttijd = prompt("Hoe laat ben je begonnen? (HH:MM) ");
     if (isValidTimeFormat(starttijd)) {
       break;
     }
-    console.log("Ongeldige tijdnotattie. Voer de de tijd in als HH:MM");
+    console.log("Ongeldige tijdnotatie. Voer de tijd in als HH:MM.");
   }
 
-  let eindtijd;
   while (true) {
-    eindtijd = prompt("Hoe laat ben je begonnen ? (HH:MM)");
-    if (isValidTimeFormat(eindtijd)) {
+    eindtijd = prompt("Hoe laat ben je klaar? (HH:MM) ");
+    if (isValidTimeFormat(eindtijd) && eindtijd >= starttijd) {
       break;
     }
-    console.log("Ongeldige tijdnotattie. Voer de de tijd in als HH:MM");
+    console.log(
+      "Ongeldige tijdnotatie of eindtijd moet na starttijd liggen. Voer de tijd in als HH:MM."
+    );
   }
 
-  while (eindtijd < starttijd) {
-    registerTime();
-    break;
-  }
+  return { starttijd, eindtijd };
 }
 
-registerTime();
+let times;
+do {
+  times = registerTime();
+} while (times.eindtijd < times.starttijd);
 
-console.log("Naam:", name);
-console.log("Datum:", new Date());
-console.log("Starttijd:", starttijd);
-console.log("Eindtijd:", eindtijd);
+Datum = new Date().toDateString();
+total = parseFloat(times.eindtijd) - parseFloat(times.starttijd);
+console.log(total);
+
+const Registerd = {
+  Naam: naam,
+  Datum: Datum,
+  Starttijd: times.starttijd,
+  Eindtijd: times.eindtijd,
+};
+
+console.log(Registerd);
