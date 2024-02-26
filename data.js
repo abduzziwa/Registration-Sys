@@ -46,12 +46,14 @@ do {
 } while (times.eindtijd < times.starttijd);
 
 Datum = new Date().toDateString();
+// Tijd = now.getTime();
 total = parseFloat(times.eindtijd) - parseFloat(times.starttijd);
 console.log(total);
 
 const Registerd = {
   Naam: naam,
-  Datum: Datum,
+  RegistratieDatum: Datum,
+  // RegistratieTijd: Tijd,
   Starttijd: times.starttijd,
   Eindtijd: times.eindtijd,
 };
